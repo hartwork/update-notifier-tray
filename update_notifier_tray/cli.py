@@ -13,6 +13,9 @@ import apt
 from PySide import QtGui, QtCore
 
 
+_CHECK_INTERVAL_SECONDS = 60
+
+
 def _get_updateable_package_count():
 	count = 0
 	cache = apt.Cache()
@@ -83,7 +86,7 @@ class _UpdateCheckThread(Thread, QtCore.QObject):
 		while not self._exit_wanted.isSet():
 			count = _get_updateable_package_count()
 			self._count_changed.emit(count)
-			time.sleep(1)
+			time.sleep(_CHECK_INTERVAL_SECONDS)
 
 
 def main():
