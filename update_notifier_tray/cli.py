@@ -2,13 +2,16 @@
 # Licensed under GPL v3 or later
 
 from __future__ import print_function
-import sys
-from PySide import QtGui, QtCore
-import apt
-import subprocess
+
 import signal
+import subprocess
+import sys
 from threading import Event, Thread
 import time
+
+import apt
+from PySide import QtGui, QtCore
+
 
 def _get_updateable_package_count():
 	count = 0
