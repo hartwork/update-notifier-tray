@@ -3,13 +3,15 @@
 
 from __future__ import print_function
 
+import os
 import signal
 import subprocess
 import sys
-from threading import Event, Thread
+from threading import Event, Lock, Thread
 import time
 
 import apt
+import pynotify
 from PySide import QtGui, QtCore
 
 
@@ -41,6 +43,8 @@ class _UpdateNotifierTrayIcon(QtGui.QSystemTrayIcon):
 		self.setContextMenu(menu)
 
 		self.activated.connect(self.handle_activated)
+		self._previous_count = 0
+		self._previous_count_lock = Lock()
 
 	def handle_activated(self, reason):
 		if reason in (QtGui.QSystemTrayIcon.Trigger, QtGui.QSystemTrayIcon.DoubleClick, QtGui.QSystemTrayIcon.MiddleClick):
@@ -48,7 +52,19 @@ class _UpdateNotifierTrayIcon(QtGui.QSystemTrayIcon):
 
 	@QtCore.Slot(int)
 	def handle_count_changed(self, count):
+		self._previous_count_lock.acquire()
+
+		unchanged = (count == self._previous_count)
+		self._previous_count = count
+
+		self._previous_count_lock.release()
+
+		if unchanged:
+			return
+
 		if count > 0:
+			title = 'Updates available'
+
 			if count == 1:
 				message = 'There is 1 update available'
 			else:
@@ -56,6 +72,9 @@ class _UpdateNotifierTrayIcon(QtGui.QSystemTrayIcon):
 
 			self.setToolTip(message)
 			self.show()
+
+			notification = pynotify.Notification(title, message)
+			notification.show()
 		else:
 			self.hide()
 
@@ -97,6 +116,7 @@ def main():
 	icon = QtGui.QIcon('/usr/share/icons/Tango/scalable/status/software-update-available.svg')
 	tray_icon = _UpdateNotifierTrayIcon(icon, dummy_widget)
 	check_thread = _UpdateCheckThread()
+	pynotify.init(os.path.basename(sys.argv[0]))
 
 	check_thread.set_tray_icon(tray_icon)
 	tray_icon.set_thread(check_thread)
