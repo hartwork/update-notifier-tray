@@ -105,7 +105,10 @@ class _UpdateCheckThread(Thread, QtCore.QObject):
 		while not self._exit_wanted.isSet():
 			count = _get_updateable_package_count()
 			self._count_changed.emit(count)
-			time.sleep(_CHECK_INTERVAL_SECONDS)
+			for i in range(_CHECK_INTERVAL_SECONDS):
+				if self._exit_wanted.isSet():
+					break
+				time.sleep(1)
 
 
 def main():
