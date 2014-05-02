@@ -29,6 +29,7 @@ def _get_updateable_package_count():
 
 def _start_update_gui():
 	subprocess.Popen(['gpk-update-viewer'])
+	signal.signal(signal.SIGCHLD, signal.SIG_IGN)  # So the kernel takes care of the zombie
 
 
 class _UpdateNotifierTrayIcon(QtGui.QSystemTrayIcon):
