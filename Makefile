@@ -10,3 +10,8 @@ install:
 .PHONY: deb
 deb:
 	debuild -us -uc
+
+.PHONY: clean
+clean:
+	rm -Rf dist/
+	find -type f -name '*.pyc' -delete
