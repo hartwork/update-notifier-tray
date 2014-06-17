@@ -5,3 +5,7 @@ dist:
 .PHONY: install
 install:
 	./setup.py install --prefix /usr --root "$(DESTDIR)"
+
+.PHONY: deb
+deb:
+	debuild -us -uc
