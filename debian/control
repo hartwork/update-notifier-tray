@@ -1,0 +1,12 @@
+Source: update-notifier-tray
+Section: unknown
+Priority: optional
+Maintainer: Sebastian Pipping <sebastian@pipping.org>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.4
+Homepage: https://github.com/hartwork/update-notifier-tray
+
+Package: update-notifier-tray
+Architecture: all
+Depends: ${misc:Depends}, tango-icon-theme, gnome-packagekit
+Description: Tray icon notifiying of new package updates
