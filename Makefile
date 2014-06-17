@@ -5,7 +5,7 @@ dist:
 .PHONY: install
 install:
 	./setup.py install --prefix /usr --root "$(DESTDIR)"
-	cd "$(DESTDIR)"/usr/lib/python*/ && mv site-packages dist-packages
+	cd "$(DESTDIR)"/usr/lib/python*/site-packages/update_notifier_tray/../../ && mv site-packages dist-packages
 
 .PHONY: deb
 deb:
