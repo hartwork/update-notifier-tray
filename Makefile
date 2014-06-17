@@ -5,6 +5,7 @@ dist:
 .PHONY: install
 install:
 	./setup.py install --prefix /usr --root "$(DESTDIR)"
+	cd "$(DESTDIR)"/usr/lib/python*/ && mv site-packages dist-packages
 
 .PHONY: deb
 deb:
