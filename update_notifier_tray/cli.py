@@ -18,12 +18,37 @@ from PySide import QtGui, QtCore
 _CHECK_INTERVAL_SECONDS = 60
 
 
+_cache_instance = None
+
+
+def cache_open():
+	if hasattr(apt.Cache, 'close'):
+		cache = apt.Cache()
+		cache.open()
+		return cache
+	else:
+		global _cache_instance
+		if _cache_instance is None:
+			_cache_instance = apt.Cache()
+		_cache_instance.open()
+		return _cache_instance
+
+
+def cache_close(cache):
+	if hasattr(apt.Cache, 'close'):
+		cache.close()
+
+
 def _get_updateable_package_count():
+	cache = cache_open()
+
 	count = 0
-	cache = apt.Cache()
 	for package_name in cache.keys():
 		if cache[package_name].is_upgradable:
 			count += 1
+
+	cache_close(cache)
+
 	return count
 
 

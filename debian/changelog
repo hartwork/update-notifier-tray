@@ -1,3 +1,9 @@
+update-notifier-tray (1.1) unstable; urgency=low
+
+  * Stop apt.Cache from opening more files each time
+
+ -- Sebastian Pipping <sebastian@pipping.org>  Tue, 04 Nov 2014 17:18:54 +0100
+
 update-notifier-tray (1.0) unstable; urgency=low
 
   * Initial Release.
