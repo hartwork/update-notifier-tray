@@ -11,5 +11,8 @@ class Distro(object):
 	def get_updateable_package_count(self):
 		raise NotImplementedError()
 
+	def get_check_interval_seconds(self):
+		raise NotImplementedError()
+
 	def start_update_gui(self):
 		raise NotImplementedError()

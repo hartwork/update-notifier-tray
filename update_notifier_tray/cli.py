@@ -104,7 +104,7 @@ class _UpdateCheckThread(Thread, QtCore.QObject):
 			except subprocess.CalledProcessError:
 				count = 9999  # Avoid update starvation
 			self._count_changed.emit(count)
-			for i in range(_CHECK_INTERVAL_SECONDS):
+			for i in xrange(self._distro.get_check_interval_seconds()):
 				if self._exit_wanted.isSet():
 					break
 				time.sleep(1)

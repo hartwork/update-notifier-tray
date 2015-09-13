@@ -41,6 +41,9 @@ class Gentoo(Distro):
 					if line.startswith('[ebuild')
 					])
 
+	def get_check_interval_seconds(self):
+		return 60 * 60 * 12
+
 	def _get_update_command(self):
 		return '(set -x; sudo %s) ; cd ~; bash -i' % ' '.join(_UPDATE_COMMAND)
 

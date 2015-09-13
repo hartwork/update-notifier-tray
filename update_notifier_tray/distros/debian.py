@@ -23,6 +23,9 @@ class Debian(Distro):
 						count += 1
 		return count
 
+	def get_check_interval_seconds(self):
+		return 60
+
 	def start_update_gui(self):
 		subprocess.Popen(['gpk-update-viewer'])
 		signal.signal(signal.SIGCHLD, signal.SIG_IGN)  # So the kernel takes care of the zombie
