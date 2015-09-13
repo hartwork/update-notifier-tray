@@ -6,6 +6,7 @@ from __future__ import print_function
 import argparse
 import os
 import signal
+import subprocess
 import sys
 from threading import Event, Lock, Thread
 import time
@@ -14,6 +15,7 @@ import pynotify
 from PySide import QtGui, QtCore
 
 from update_notifier_tray.distros.debian import Debian
+from update_notifier_tray.distros.gentoo import Gentoo
 
 
 _CHECK_INTERVAL_SECONDS = 60
@@ -97,7 +99,10 @@ class _UpdateCheckThread(Thread, QtCore.QObject):
 
 	def run(self):
 		while not self._exit_wanted.isSet():
-			count = self._distro.get_updateable_package_count()
+			try:
+				count = self._distro.get_updateable_package_count()
+			except subprocess.CalledProcessError:
+				count = 9999  # Avoid update starvation
 			self._count_changed.emit(count)
 			for i in range(_CHECK_INTERVAL_SECONDS):
 				if self._exit_wanted.isSet():
@@ -112,6 +117,8 @@ def main():
 	distros = parser.add_mutually_exclusive_group(required=True)
 	distros.add_argument('--debian', dest='distro_callable', action='store_const', const=Debian,
 			help='Activate Debian mode')
+	distros.add_argument('--gentoo', dest='distro_callable', action='store_const', const=Gentoo,
+			help='Activate Gentoo mode')
 	options = parser.parse_args()
 
 	distro = options.distro_callable()
