@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 
+import argparse
 import os
 import signal
 import sys
@@ -107,7 +108,13 @@ class _UpdateCheckThread(Thread, QtCore.QObject):
 def main():
 	signal.signal(signal.SIGINT, signal.SIG_DFL)  # To make killable using Ctrl+C
 
-	distro = Debian()
+	parser = argparse.ArgumentParser()
+	distros = parser.add_mutually_exclusive_group(required=True)
+	distros.add_argument('--debian', dest='distro_callable', action='store_const', const=Debian,
+			help='Activate Debian mode')
+	options = parser.parse_args()
+
+	distro = options.distro_callable()
 
 	app = QtGui.QApplication(sys.argv)
 	dummy_widget = QtGui.QWidget()
