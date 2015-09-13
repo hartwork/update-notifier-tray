@@ -8,6 +8,10 @@ class Distro(object):
 	def describe_update_gui_action(self):
 		raise NotImplementedError()
 
+	@staticmethod
+	def get_command_line_name():
+		raise NotImplementedError()
+
 	def get_updateable_package_count(self):
 		raise NotImplementedError()
 

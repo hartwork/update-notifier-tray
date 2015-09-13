@@ -13,6 +13,10 @@ class Debian(Distro):
 	def describe_update_gui_action(self):
 		return 'Run gpk-&update-viewer'
 
+	@staticmethod
+	def get_command_line_name():
+		return 'debian'
+
 	def get_updateable_package_count(self):
 		import apt
 

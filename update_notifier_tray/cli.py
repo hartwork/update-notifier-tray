@@ -18,6 +18,12 @@ from update_notifier_tray.distros.debian import Debian
 from update_notifier_tray.distros.gentoo import Gentoo
 
 
+_DISTRO_CLASSES = (
+		Debian,
+		Gentoo,
+		)
+
+
 class _UpdateNotifierTrayIcon(QtGui.QSystemTrayIcon):
 	def __init__(self, icon, parent, distro):
 		super(_UpdateNotifierTrayIcon, self).__init__(icon, parent)
@@ -112,10 +118,10 @@ def main():
 
 	parser = argparse.ArgumentParser()
 	distros = parser.add_mutually_exclusive_group(required=True)
-	distros.add_argument('--debian', dest='distro_callable', action='store_const', const=Debian,
-			help='Activate Debian mode')
-	distros.add_argument('--gentoo', dest='distro_callable', action='store_const', const=Gentoo,
-			help='Activate Gentoo mode')
+	for clazz in _DISTRO_CLASSES:
+		name = clazz.get_command_line_name()
+		distros.add_argument('--%s' % name, dest='distro_callable', action='store_const',
+				const=clazz, help='Activate %s mode' % name.title())
 	options = parser.parse_args()
 
 	distro = options.distro_callable()

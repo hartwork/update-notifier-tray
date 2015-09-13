@@ -33,6 +33,10 @@ class Gentoo(Distro):
 	def describe_update_gui_action(self):
 		return 'Run "emerge --ask --&update ..."'
 
+	@staticmethod
+	def get_command_line_name():
+		return 'gentoo'
+
 	def get_updateable_package_count(self):
 		with open('/dev/null', 'w') as dev_null:
 			output = subprocess.check_output(_CHECK_FOR_UPDATES_COMMAND, stderr=dev_null)
