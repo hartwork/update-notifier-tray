@@ -18,9 +18,6 @@ from update_notifier_tray.distros.debian import Debian
 from update_notifier_tray.distros.gentoo import Gentoo
 
 
-_CHECK_INTERVAL_SECONDS = 60
-
-
 class _UpdateNotifierTrayIcon(QtGui.QSystemTrayIcon):
 	def __init__(self, icon, parent, distro):
 		super(_UpdateNotifierTrayIcon, self).__init__(icon, parent)
