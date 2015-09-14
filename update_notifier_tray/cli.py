@@ -117,13 +117,24 @@ def main():
 	signal.signal(signal.SIGINT, signal.SIG_DFL)  # To make killable using Ctrl+C
 
 	parser = argparse.ArgumentParser()
-	distros = parser.add_mutually_exclusive_group(required=True)
+	distros = parser.add_mutually_exclusive_group()
 	for clazz in _DISTRO_CLASSES:
 		name = clazz.get_command_line_name()
 		distros.add_argument('--%s' % name, dest='distro_callable', action='store_const',
 				const=clazz, help='Activate %s mode' % name.title())
 	options = parser.parse_args()
 
+	if options.distro_callable is None:
+		lsb_release_minus_a_output = subprocess.check_output([
+				'lsb_release', '-a'])
+		for clazz in _DISTRO_CLASSES:
+			if clazz.detected(lsb_release_minus_a_output):
+				options.distro_callable = clazz
+				break
+		else:
+			print('No supported distribution was detected, please check --help output.',
+					file=sys.stderr)
+			sys.exit(1)
 	distro = options.distro_callable()
 
 	app = QtGui.QApplication(sys.argv)

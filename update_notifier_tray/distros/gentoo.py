@@ -34,6 +34,10 @@ class Gentoo(Distro):
 		return 'Run "emerge --ask --&update ..."'
 
 	@staticmethod
+	def detected(lsb_release_minus_a_output):
+		return 'Gentoo' in lsb_release_minus_a_output
+
+	@staticmethod
 	def get_command_line_name():
 		return 'gentoo'
 

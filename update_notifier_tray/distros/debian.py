@@ -14,6 +14,10 @@ class Debian(Distro):
 		return 'Run gpk-&update-viewer'
 
 	@staticmethod
+	def detected(lsb_release_minus_a_output):
+		return 'Debian' in lsb_release_minus_a_output
+
+	@staticmethod
 	def get_command_line_name():
 		return 'debian'
 

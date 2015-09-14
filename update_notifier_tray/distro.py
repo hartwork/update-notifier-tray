@@ -9,6 +9,10 @@ class Distro(object):
 		raise NotImplementedError()
 
 	@staticmethod
+	def detected(lsb_release_minus_a_output):
+		raise NotImplementedError()
+
+	@staticmethod
 	def get_command_line_name():
 		raise NotImplementedError()
 
