@@ -125,8 +125,9 @@ def main():
 	options = parser.parse_args()
 
 	if options.distro_callable is None:
-		lsb_release_minus_a_output = subprocess.check_output([
-				'lsb_release', '-a'])
+		with open('/dev/null', 'w') as dev_null:
+			lsb_release_minus_a_output = subprocess.check_output([
+					'lsb_release', '-a'], stderr=dev_null)
 		for clazz in _DISTRO_CLASSES:
 			if clazz.detected(lsb_release_minus_a_output):
 				options.distro_callable = clazz
