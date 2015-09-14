@@ -132,6 +132,8 @@ def main():
 		for clazz in _DISTRO_CLASSES:
 			if clazz.detected(lsb_release_minus_a_output):
 				options.distro_callable = clazz
+				print('INFO: %s detected for a distribution.'
+						% clazz.get_command_line_name().title())
 				break
 		else:
 			print('No supported distribution was detected, please check --help output.',
