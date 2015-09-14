@@ -121,7 +121,8 @@ def main():
 	for clazz in _DISTRO_CLASSES:
 		name = clazz.get_command_line_name()
 		distros.add_argument('--%s' % name, dest='distro_callable', action='store_const',
-				const=clazz, help='Activate %s mode' % name.title())
+				const=clazz, help='force %s mode (default: distribution auto-detected)'
+					% name.title())
 	options = parser.parse_args()
 
 	if options.distro_callable is None:
