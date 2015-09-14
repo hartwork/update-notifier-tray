@@ -16,6 +16,7 @@ setup(
 		url='update-notifier-tray',
 		packages=[
 				'update_notifier_tray',
+				'update_notifier_tray.distros',
 				],
 		scripts=[
 				'update-notifier-tray',
