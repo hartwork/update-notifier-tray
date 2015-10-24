@@ -1,3 +1,9 @@
+update-notifier-tray (1.2) unstable; urgency=low
+
+  * Be okay with non-zero return codes from portage
+
+ -- Sebastian Pipping <sebastian@pipping.org>  Sat, 24 Oct 2015 22:23:11 +0200
+
 update-notifier-tray (1.1) unstable; urgency=low
 
   * Stop apt.Cache from opening more files each time
