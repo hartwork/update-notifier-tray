@@ -28,6 +28,13 @@ _UPDATE_COMMAND = (
 		)
 
 
+def subprocess_nocheck_output(argv, **kvargs):
+	kvargs['stdout'] = subprocess.PIPE
+	p = subprocess.Popen(argv, **kvargs)
+	p.wait()
+	return p.stdout.read()
+
+
 class Gentoo(Distro):
 	def describe_update_gui_action(self):
 		return 'Run "emerge --ask --&update ..."'
@@ -42,7 +49,7 @@ class Gentoo(Distro):
 
 	def get_updateable_package_count(self):
 		with open('/dev/null', 'w') as dev_null:
-			output = subprocess.check_output(_CHECK_FOR_UPDATES_COMMAND, stderr=dev_null)
+			output = subprocess_nocheck_output(_CHECK_FOR_UPDATES_COMMAND, stderr=dev_null)
 			return len([0 \
 					for line in output.split('\n') \
 					if line.startswith('[ebuild')

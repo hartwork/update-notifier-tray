@@ -102,10 +102,7 @@ class _UpdateCheckThread(Thread, QtCore.QObject):
 
 	def run(self):
 		while not self._exit_wanted.isSet():
-			try:
-				count = self._distro.get_updateable_package_count()
-			except subprocess.CalledProcessError:
-				count = 9999  # Avoid update starvation
+			count = self._distro.get_updateable_package_count()
 			self._count_changed.emit(count)
 			for i in xrange(self._distro.get_check_interval_seconds()):
 				if self._exit_wanted.isSet():
