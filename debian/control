@@ -12,5 +12,7 @@ Depends: ${misc:Depends},
  gnome-packagekit,
  lsb-release,
  python (>= 2.7),
+ python-apt,
+ python-pyside,
  tango-icon-theme
 Description: Tray icon notifiying of new package updates
