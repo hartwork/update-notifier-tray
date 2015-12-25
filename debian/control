@@ -8,5 +8,9 @@ Homepage: https://github.com/hartwork/update-notifier-tray
 
 Package: update-notifier-tray
 Architecture: all
-Depends: ${misc:Depends}, python (>= 2.7), tango-icon-theme, gnome-packagekit, lsb-release
+Depends: ${misc:Depends},
+ gnome-packagekit,
+ lsb-release,
+ python (>= 2.7),
+ tango-icon-theme
 Description: Tray icon notifiying of new package updates
