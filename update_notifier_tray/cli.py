@@ -16,11 +16,13 @@ from PySide import QtGui, QtCore
 
 from update_notifier_tray.distros.debian import Debian
 from update_notifier_tray.distros.gentoo import Gentoo
+from update_notifier_tray.distros.ubuntu import Ubuntu
 
 
 _DISTRO_CLASSES = (
 		Debian,
 		Gentoo,
+		Ubuntu,
 		)
 
 
